@@ -23,20 +23,30 @@ class Spring{
         this.displacement=0;
         this.time=0;
         this.winds=winds;
+        this.angularVelocity=2;
     }
     show(){
-        var pointOnCircle ={
-x:0,
-y:0
-        };
+      
         stroke(255,255,0);
         line(this.zero, 0, this.zero, height);
-        
         stroke(255,255,255);
-        beginShape();
-        noFill();
-        var x=0;
-        for (let i = 0; i < PI*2*this.winds;i+=PI*2*this.winds/this.detail) {
+        this.showSpring();
+        this.showInfo();
+    }
+    showInfo(){
+        stroke(255);
+        textSize(50);
+        text(this.angularVelocity/(2*PI), 0,-100)
+    }
+showSpring(){
+    var pointOnCircle ={
+        x:0,
+        y:0
+                };
+    var x=0;
+    beginShape();
+    noFill();
+    for (let i = 0; i < PI*2*this.winds;i+=PI*2*this.winds/this.detail) {
             pointOnCircle.x=x+this.x+this.radius*cos(i)-this.radius;
             pointOnCircle.y=this.y+this.radius*sin(i);
          vertex(pointOnCircle.x,pointOnCircle.y);   
@@ -44,9 +54,11 @@ y:0
 
         }
         endShape(CLOSE);
-    }
+    
+}
     update(){
-        this.time+=0.5;
-        this.displacement=20*cos(this.time);
+        this.time+=1/30;
+        this.displacement=100*cos(this.angularVelocity*this.time);
+
     }
 }
